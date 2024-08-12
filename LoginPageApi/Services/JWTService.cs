@@ -17,7 +17,7 @@ namespace LoginPageApi.Services
             _jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
         }
 
-        public string CreateJWT(User user)     
+        public async Task<string> CreateJWT(User user)     
         {
             var userClaims = new List<Claim>
             {
