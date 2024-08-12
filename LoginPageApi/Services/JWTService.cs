@@ -34,7 +34,7 @@ namespace LoginPageApi.Services
                 Subject = new ClaimsIdentity(userClaims),
                 Expires = DateTime.UtcNow.AddDays(int.Parse(_config["JWT:ExpiresIndays"])),
                 SigningCredentials = creadentials,
-                Issuer = _config["JWT:Issuer"]
+                Issuer = _config["JWT:Issuer"]    
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
