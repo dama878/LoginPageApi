@@ -1,10 +1,12 @@
 ﻿using LoginPageApi.DTOs.Account;
 using LoginPageApi.Models;
 using LoginPageApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace LoginPageApi.Controllers
 {
@@ -22,6 +24,14 @@ namespace LoginPageApi.Controllers
             _jwtService = jwtService;
             _signInManager = signInManager;
             _userManager = userManager;
+        }
+
+        [Authorize]
+        [HttpGet("refresh-user-token")]
+        public async Task<ActionResult<UserDto>> RefreshUserToken()
+        {
+            var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.Email)?.Value);
+            return await CreateApplicationUserDto(user);
         }
 
         [HttpPost("login")]
