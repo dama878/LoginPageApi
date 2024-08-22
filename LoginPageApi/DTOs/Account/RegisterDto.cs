@@ -18,7 +18,6 @@ namespace LoginPageApi.DTOs.Account
 
         [Required]
         [StringLength(15, MinimumLength = 8, ErrorMessage = "First name must be at least {2}, and maximum {1} characters")]
-
         public string Password { get; set; }
     }
 }
