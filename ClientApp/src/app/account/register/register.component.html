@@ -61,11 +61,15 @@
                     </span>
                 </div>
 
+                <div class="form-floating">
+                    <app-validation-message [errorMessage]="errorMessage"></app-validation-message>
+                </div>
+
                 <div class="d-grid mt-4 px-1">
                     <button class="btn btn-lg btn-info">Create Account</button>
                 </div>
             </form>
-
+            
             <div class="mt-4 text-center">
                 <a class="btn btn-link">
                     <h6>Forgot username or password</h6>

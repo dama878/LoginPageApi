@@ -4,10 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { response } from 'express';
 import { error } from 'console';
+import { ValidationMessageComponent } from "../../shared/components/errors/validation-message/validation-message.component";
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, ValidationMessageComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -40,17 +41,22 @@ export class RegisterComponent implements OnInit {
     this.errorMessage =[];
     this.submitted=true
     
-    if(this.registerForm.valid) {
-      this.accountService.register(this.registerForm.value).subscribe({
-        next:(response) =>{
-          console.log(response)
-        },
-        error: error => {
-          console.log(error)
+    // if(this.registerForm.valid) {
+    // }
+    this.accountService.register(this.registerForm.value).subscribe({
+      next:(response) =>{
+        console.log(response)
+      },
+      error: error => {
+        if(error.error.errors){
+          this.errorMessage = error.error.errors
+        } else {
+          this.errorMessage.push(error.error);
         }
-      })
-      console.log(this.registerForm.value);
-    }
+        console.log(error)
+      }
+    })
+    console.log(this.registerForm.value);
   }
 
 }

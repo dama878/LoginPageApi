@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace LoginPageApi.Controllers
 {
@@ -61,7 +62,7 @@ namespace LoginPageApi.Controllers
         {
             if (await checkEmailexistAsync(model.Email))
             {
-                return BadRequest($"An existing account is using{model.Email}, email address. Please try another email address");
+                return BadRequest(JsonSerializer.Serialize($"An existing account is using {model.Email}, email address. Please try another email address"));
             }
 
             var userToAdd = new User
@@ -77,7 +78,7 @@ namespace LoginPageApi.Controllers
             var result = await _userManager.CreateAsync(userToAdd, model.Password);
             if (!result.Succeeded) return BadRequest(result.Errors);
 
-            return Ok("Your account has been created you can login");
+            return Ok(new JsonResult(new {titile = "Account Createed", message = "Your account has been created, you can login"}));
         }
 
 

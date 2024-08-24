@@ -1,1 +1,9 @@
-<p>validation-message works!</p>
+@if (errorMessage){
+
+    <ul class="text-danger">
+        @for(error of errorMessage; track error){
+
+            <li>{{ error }}</li>
+        }
+    </ul>
+}
